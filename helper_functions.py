@@ -1,3 +1,11 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.signal as signal
+import scipy.interpolate as interp
+import scipy as sp
+import re
+
+
 def unPackRawFile(raw_path):
     """
     - unpacks the Raw conditions file. Not used for the neural network.
