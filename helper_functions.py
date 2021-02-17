@@ -69,7 +69,7 @@ def Box(lx,ly,lz, Lbox, h100, aexp, ms, xg, yg, zg, pos, e3):
     #print((aexp/h100))
     # select galaxies
     sel1 = np.logical_and(w>2.19,w<97.7) # within first 120 cMpc/h
-    sel2 = np.logical_and(dr<(3),ms>1.0e7) # within 4 pMpc of the LOS and mass > 1e9 Msun
+    sel2 = np.logical_and(dr<(3),ms>1.0e9) # within 4 pMpc of the LOS and mass > 1e9 Msun
     sel = np.logical_and(sel1,sel2)
     
     ms_return = np.array([])
@@ -128,7 +128,7 @@ def convertSphereToCart(theta, phi):
     return np.sin(theta)*np.cos(phi), np.sin(theta)*np.sin(phi), np.cos(theta)
 
 
-def get_galaxies(path_galaxies, path_LOS, number):
+def get_galaxies(gals, path_LOS, number):
     """
     function can take in the path of the galaxy file (.res) and the line of sight. Number should match the LOS #
     """
@@ -145,12 +145,11 @@ def get_galaxies(path_galaxies, path_LOS, number):
     pos = pos/256*40
     sphere_los = np.array(getDir(path_LOS))  # direction of LOS , np.sum(e3**2) should be = 1
     e3 = convertSphereToCart(sphere_los[0], sphere_los[1])
-    x = np.loadtxt(path_galaxies, usecols=[1,5,6,7],unpack=1) # load data
 
-    ms = x[0] # stellar mass
-    xg = x[1] #\
-    yg = x[2] # | positions of the galaxies in cMpc/h
-    zg = x[3] #/
+    ms = gals[0] # stellar mass
+    xg = gals[1] #\
+    yg = gals[2] # | positions of the galaxies in cMpc/h
+    zg = gals[3] #/
     
     for lz in range(-1,3):
         for ly in range(-1,3):
